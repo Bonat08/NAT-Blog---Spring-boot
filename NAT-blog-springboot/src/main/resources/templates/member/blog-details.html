@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th = "https://www.thymeleaf.org/">
+<head th:replace="~{/member/fragments::head}">
+</head>
+<body>
+  <!--================Header Menu Area =================-->
+  <header th:replace="~{/member/fragments::header}">
+  </header>
+  <!--================Header Menu Area =================-->
+  
+  <!--================ Hero sm Banner start =================-->
+  <section th:replace="~{/member/fragments::hero_banner}">
+  </section>
+  <!--================ Hero sm Banner end =================-->    
+
+
+  
+
+  <!--================ Start Blog Post Area =================-->
+  <section class="blog-post-area section-margin">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8">
+            <div class="main_blog_details">
+                <img class="img-fluid" th:src = "${'data:image/jpeg;base64,' + {post.image}}" alt="">
+                <a href="#"><h4 th:text="${post.title}"></h4></a>
+                <div class="user_details">
+                  <div class="float-left">
+                    <a href="#" th:text="${post.category}"></a>
+                  </div>
+                  <div class="float-right mt-sm-0 mt-3">
+                    <div class="media">
+                      <div class="media-body">
+                        <h5 th:text="${post.user}"></h5>
+<!--                        <p>12 Dec, 2017 11:21 am</p>-->
+                          <p th:text="${#dates.format(post.createddate, 'dd-MMM-yyyy')}"></p>
+                      </div>
+                      <div class="d-flex">
+                        <img width="42" height="42"  th:src = "${'data:image/jpeg;base64,' + {author.avatar}}" alt="">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+           <blockquote class="blockquote">
+             <p class="mb-0" th:text="${post.shortdescription}"></p>
+           </blockquote>
+           <div th:utext="${post.content}"></div>
+            <div class="news_d_footer flex-column flex-sm-row">
+                 <a href="#"><span class="align-middle mr-2"><i class="ti-heart"></i></span>Lily and 4 people like this</a>
+                 <a class="justify-content-sm-center ml-sm-auto mt-sm-0 mt-2" href="#"><span class="align-middle mr-2"><i class="ti-themify-favicon"></i></span>06 Comments</a>
+                 <div class="news_socail ml-sm-auto mt-sm-0 mt-2">
+                   <a href="#"><i class="fab fa-facebook-f"></i></a>
+                   <a href="#"><i class="fab fa-twitter"></i></a>
+                   <a href="#"><i class="fab fa-dribbble"></i></a>
+                   <a href="#"><i class="fab fa-behance"></i></a>
+                 </div>
+               </div>
+            </div>
+          
+
+          <div class="navigation-area">
+                  <div class="row">
+                      <div class="col-lg-6 col-md-6 col-12 nav-left flex-row d-flex justify-content-start align-items-center">
+                          <div class="thumb">
+                              <a th:href="@{/member/blog-details/{id} (id=${postPrev.id})}"><img style="height: 40px; width: 50px;" th:src = "${'data:image/jpeg;base64,' + {postPrev.image}}" alt=""></a>
+                          </div>
+                          <div class="arrow">
+                              <a th:href="@{/member/blog-details/{id} (id=${postPrev.id})}"><span class="lnr text-white lnr-arrow-left"></span></a>
+                          </div>
+                          <div class="detials">
+                              <p>Prev Post</p>
+                              <a th:href="@{/member/blog-details/{id} (id=${postPrev.id})}"><h4 th:text="${postPrev.title}"></h4></a>
+                          </div>
+                      </div>
+
+                      <div class="col-lg-6 col-md-6 col-12 nav-right flex-row d-flex justify-content-end align-items-center">
+                          <div class="detials">
+                              <p>Next Post</p>
+                              <a th:href="@{/member/blog-details/{id} (id=${postNext.id})}"><h4 th:text="${postNext.title}"></h4></a>
+                          </div>
+                          <div class="arrow">
+                              <a th:href="@{/member/blog-details/{id} (id=${postNext.id})}"><span class="lnr text-white lnr-arrow-right"></span></a>
+                          </div>
+                          <div class="thumb">
+                              <a th:href="@{/member/blog-details/{id} (id=${postNext.id})}"><img style="height: 40px; width: 50px;" class="img-fluid" th:src = "${'data:image/jpeg;base64,' + {postNext.image}}" alt=""></a>
+                          </div>										
+                      </div>									
+                  </div>
+                </div>
+                <div class="comments-area">
+                    <h4>05 Comments</h4>
+                    <div class="comment-list">
+                        <div class="single-comment justify-content-between d-flex">
+                            <div class="user justify-content-between d-flex">
+                                <div class="thumb">
+                                    <img src="img/blog/c1.jpg" alt="">
+                                </div>
+                                <div class="desc">
+                                    <h5><a href="#">Emilly Blunt</a></h5>
+                                    <p class="date">December 4, 2017 at 3:12 pm </p>
+                                    <p class="comment">
+                                        Never say goodbye till the end comes!
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>	
+                </div>
+                <div class="comment-form">
+                    <h4>Leave a Reply</h4>
+                    <form>
+                        <div class="form-group">
+                            <textarea class="form-control mb-10" rows="5" name="message" placeholder="Messege" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Messege'" required=""></textarea>
+                        </div>
+                        <a href="#" class="button submit_btn">Post Comment</a>	
+                    </form>
+                </div>
+        </div>
+
+        <!-- Start Blog Post Siddebar -->
+          <div th:replace="~{/member/fragments::sidebar}">
+          </div>
+      </div>
+        <!-- End Blog Post Siddebar -->
+      </div>
+  </section>
+  <!--================ End Blog Post Area =================-->
+
+  <!--================ Start Footer Area =================-->
+  <footer th:replace="~{/member/fragments::footer}">
+  </footer>
+  <!--================ End Footer Area =================-->
+
+  <div th:replace="~{/member/fragments::script}"></div>
+</body>
+</html>

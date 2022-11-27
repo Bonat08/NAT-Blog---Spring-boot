@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th = "https://www.thymeleaf.org/">
+<head th:replace="~{/member/fragments::head}">
+</head>
+<body>
+  <!--================Header Menu Area =================-->
+  <header th:replace="~{/member/fragments::header}">
+  </header>
+  <!--================Header Menu Area =================-->
+
+
+  <!-- ================ contact section start ================= -->
+  <section class="section profile section blog-post-area section-margin mt-4">
+    <div class="row">
+      <div class="col-xl-4">
+
+        <div class="card">
+          <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+
+            <img style="height: 100px; width: 100px;" th:src = "${'data:image/jpeg;base64,' + {user.avatar}}" alt="Profile" class="rounded-circle">
+            <h2 th:text="${user.username}"></h2>
+            <h3 th:text="${user.email}"></h3>
+          </div>
+        </div>
+        <div th:if = "${errors}">
+          <p class = "alert alert-danger" th:text = "${errors}"></p>
+        </div>
+        <div th:if = "${success}">
+          <p class = "alert alert-success" th:text = "${success}"></p>
+        </div>
+      </div>
+
+      <div class="col-xl-8">
+
+        <div class="card">
+          <div class="card-body pt-3">
+            <!-- Bordered Tabs -->
+            <ul class="nav nav-tabs nav-tabs-bordered">
+
+              <li class="nav-item">
+                <button class="nav-link active" data-toggle="tab" data-target="#profile-overview">Overview</button>
+              </li>
+
+              <li class="nav-item">
+                <button class="nav-link" data-toggle="tab" data-target="#profile-edit">Edit Profile</button>
+              </li>
+
+              <li class="nav-item">
+                <button class="nav-link" data-toggle="tab" data-target="#profile-change-password">Change Password</button>
+              </li>
+
+            </ul>
+            <div class="tab-content pt-2">
+
+              <div class="tab-pane fade show active profile-overview" id="profile-overview">
+
+                <h5 class="card-title">Profile Details</h5>
+
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label ">Username</div>
+                  <div class="col-lg-9 col-md-8" th:text="${user.username}"></div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label">Created Date</div>
+                  <div class="col-lg-9 col-md-8" th:text="${#dates.format(user.createddate, 'dd-MMM-yyyy')}"></div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label">Email</div>
+                  <div class="col-lg-9 col-md-8" th:text="${user.email}"></div>
+                </div>
+
+              </div>
+
+              <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
+
+                <!-- Profile Edit Form -->
+                <form th:action="@{/member/update-user-profile/{id} (id=${userDto.id})}" th:object="${userDto}" method="POST" enctype="multipart/form-data">
+                  <div class="row mb-3">
+                    <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
+                    <div class="col-md-8 col-lg-9">
+                      <img id="profileImage" style="height: 50px; width: 50px;" th:src = "*{'data:image/jpeg;base64,' + {avatar}}" alt="Profile">
+                      <div class="pt-2">
+                        <i class="bi bi-upload"></i><input class="form-control input-file" type="file" id="imageUser" name="imageUser">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
+                    <div class="col-md-8 col-lg-9">
+                      <input name="email" type="email" class="form-control" id="email" th:field="*{email}">
+                    </div>
+                  </div>
+
+                  <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                  </div>
+                </form><!-- End Profile Edit Form -->
+
+              </div>
+
+
+              <div class="tab-pane fade pt-3" id="profile-change-password">
+                <!-- Change Password Form -->
+                <form th:action="@{/member/change-password/{id} (id=${userDtoPass.id})}" method="POST" th:object="${userDtoPass}">
+
+                  <div class="row mb-3">
+                    <label for="currentpassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
+                    <div class="col-md-8 col-lg-9">
+                      <input name="currentpassword" type="password" class="form-control" id="currentpassword" th:field="*{currentpassword}">
+                    </div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <label for="newpassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
+                    <div class="col-md-8 col-lg-9">
+                      <input name="newpassword" type="password" class="form-control" id="newpassword" th:field="*{newpassword}">
+                    </div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <label for="repeatpassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
+                    <div class="col-md-8 col-lg-9">
+                      <input name="repeatpassword" type="password" class="form-control" id="repeatpassword" th:field="*{repeatpassword}">
+                    </div>
+                  </div>
+
+                  <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Change Password</button>
+                  </div>
+                </form><!-- End Change Password Form -->
+
+              </div>
+
+            </div><!-- End Bordered Tabs -->
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+	<!-- ================ contact section end ================= -->
+
+  
+
+
+  <!--================ Start Footer Area =================-->
+  <footer th:replace="~{/member/fragments::footer}">
+  </footer>
+  <!--================ End Footer Area =================-->
+
+  <div th:replace="~{/member/fragments::script}"></div>
+</body>
+</html>

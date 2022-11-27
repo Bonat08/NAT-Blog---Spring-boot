@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th = "https://www.thymeleaf.org/">
+
+<head th:replace="~{/admin/fragments::head}">
+</head>
+
+<body>
+
+<!-- ======= Header ======= -->
+<header th:replace="~{/admin/fragments::header}">
+</header><!-- End Header -->
+
+<!-- ======= Sidebar ======= -->
+<aside th:replace="~{/admin/fragments::sidebar}">
+</aside><!-- End Sidebar-->
+
+<main id="main" class="main">
+
+<!--    <div class="pagetitle">-->
+<!--        <h1>Form Elements</h1>-->
+<!--        <nav>-->
+<!--            <ol class="breadcrumb">-->
+<!--                <li class="breadcrumb-item"><a href="index.html">Home</a></li>-->
+<!--                <li class="breadcrumb-item">Forms</li>-->
+<!--                <li class="breadcrumb-item active">Elements</li>-->
+<!--            </ol>-->
+<!--        </nav>-->
+<!--    </div>&lt;!&ndash; End Page Title &ndash;&gt;-->
+
+    <section class="section">
+        <div class="row">
+            <div class="col-lg">
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Add new category</h5>
+                        <div th:if = "${errors}">
+                            <p class = "alert alert-danger" th:text = "${errors}"></p>
+                        </div>
+                        <div th:if = "${success}">
+                            <p class = "alert alert-success" th:text = "${success}"></p>
+                        </div>
+                        <!-- General Form Elements -->
+                        <form th:action="@{/update-old-category/{id} (id=${categoryDto.id})}" th:object="${categoryDto}" method="POST">
+                            <div class="row mb-3">
+                                <label for="name" class="col-sm-2 col-form-label">Category Name</label>
+                                <div class="col-sm-10">
+                                    <input th:field="*{name}" type="text" class="form-control" id="name" required>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">Submit Button</label>
+                                <div class="col-sm-10">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </div>
+
+                        </form><!-- End General Form Elements -->
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+</main><!-- End #main -->
+
+<!-- ======= Footer ======= -->
+<footer th:replace="~{/admin/fragments::footer}">
+</footer><!-- End Footer -->
+
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+<!-- Vendor JS Files -->
+<div th:replace="~{/admin/fragments::script}"></div>
+</body>
+
+</html>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th = "https://www.thymeleaf.org/"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:fragment="head">
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title th:text="${title}"></title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link th:href="@{/adminResource/img/favicon.png}" rel="icon">
+    <link th:href="@{/adminResource/img/apple-touch-icon.png}" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link th:href="@{/adminResource/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/adminResource/vendor/bootstrap-icons/bootstrap-icons.css}" rel="stylesheet">
+    <link th:href="@{/adminResource/vendor/boxicons/css/boxicons.min.css}" rel="stylesheet">
+    <link th:href="@{/adminResource/vendor/quill/quill.snow.css}" rel="stylesheet">
+    <link th:href="@{/adminResource/vendor/quill/quill.bubble.css}" rel="stylesheet">
+    <link th:href="@{/adminResource/vendor/remixicon/remixicon.css}" rel="stylesheet">
+    <link th:href="@{/adminResource/vendor/simple-datatables/style.css}" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link th:href="@{/adminResource/css/style.css}" rel="stylesheet">
+
+    <!-- Jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- Rich Text Editor-->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link th:href="@{/adminResource/richtexteditor/src/richtext.min.css}" rel="stylesheet">
+    <script th:src="@{/adminResource/richtexteditor/src/jquery.richtext.min.js}"></script>
+</head>
+<body>
+
+<!--Header-->
+<header th:fragment="header" id="header" class="header fixed-top d-flex align-items-center">
+
+    <div class="d-flex align-items-center justify-content-between">
+        <a th:href="@{/admin/index}" class="logo d-flex align-items-center">
+            <img th:src="@{/adminResource/img/logo.png}" alt="">
+            <span class="d-none d-lg-block">NAT Blog</span>
+        </a>
+        <i class="bi bi-list toggle-sidebar-btn"></i>
+    </div><!-- End Logo -->
+
+    <div class="search-bar">
+        <form class="search-form d-flex align-items-center" method="POST" action="#">
+            <input type="text" name="query" placeholder="Search" title="Enter search keyword">
+            <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+        </form>
+    </div><!-- End Search Bar -->
+
+    <nav class="header-nav ms-auto">
+        <ul class="d-flex align-items-center">
+
+            <li class="nav-item d-block d-lg-none">
+                <a class="nav-link nav-icon search-bar-toggle " href="#">
+                    <i class="bi bi-search"></i>
+                </a>
+            </li><!-- End Search Icon-->
+
+
+            <li class="nav-item dropdown pe-3">
+
+                <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+<!--                    <img src="@{/adminResource/img/profile-img.jpg}" alt="Profile" class="rounded-circle">-->
+                    <div sec:authorize="isAuthenticated()">
+                        <span class="d-none d-md-block dropdown-toggle ps-2">Welcome, <span th:text="${#authentication.getPrincipal().getUsername()}"></span></span>
+                    </div>
+
+                </a><!-- End Profile Image Icon -->
+
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                    <li>
+                        <a class="dropdown-item d-flex align-items-center" th:href="@{/member/user-profile}">
+                            <i class="bi bi-person"></i>
+                            <span>My Profile</span>
+                        </a>
+                    </li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+
+                    <li>
+                        <form class="dropdown-item d-flex align-items-center"  th:action="@{/logout}" method="POST">
+                            <i class="bi bi-box-arrow-right"></i>
+                            <button style="all: unset" type="submit" value="Sign out">Sign Out</button>
+                        </form>
+                    </li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+
+                </ul><!-- End Profile Dropdown Items -->
+
+
+            </li><!-- End Profile Nav -->
+
+        </ul>
+    </nav><!-- End Icons Navigation -->
+
+</header><!-- End Header -->
+
+<!--Sidebar-->
+<aside th:fragment="sidebar" id="sidebar" class="sidebar">
+
+    <ul class="sidebar-nav" id="sidebar-nav">
+
+        <li class="nav-item">
+            <a class="nav-link " th:href="@{/admin/index}">
+                <i class="bi bi-grid"></i>
+                <span>Dashboard</span>
+            </a>
+        </li><!-- End Dashboard Nav -->
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#category-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-menu-button-wide"></i><span>Category</span><i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="category-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <li>
+                    <a th:href="@{/admin/add-category}">
+                        <i class="bi bi-circle"></i><span>Add new category</span>
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{/admin/categories/0}">
+                        <i class="bi bi-circle"></i><span>Management</span>
+                    </a>
+                </li>
+            </ul>
+        </li><!-- End Category Nav -->
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#post-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-journal-text"></i><span>Post</span><i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="post-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <li>
+                    <a th:href="@{/admin/add-post}">
+                        <i class="bi bi-circle"></i><span>Add new post</span>
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{/admin/posts/0}">
+                        <i class="bi bi-circle"></i><span>Management</span>
+                    </a>
+                </li>
+            </ul>
+        </li><!-- End Post Nav -->
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#role-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-person"></i><span>Role</span><i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="role-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <li>
+                    <a th:href="@{/admin/add-role}">
+                        <i class="bi bi-circle"></i><span>Add new role</span>
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{/admin/roles}">
+                        <i class="bi bi-circle"></i><span>Management</span>
+                    </a>
+                </li>
+            </ul>
+        </li><!-- End Role Nav -->
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#user-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-person"></i><span>User</span><i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="user-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <li>
+                    <a th:href="@{/admin/add-admin}">
+                        <i class="bi bi-circle"></i><span>Add new admin</span>
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{/admin/user}">
+                        <i class="bi bi-circle"></i><span>Management</span>
+                    </a>
+                </li>
+            </ul>
+        </li><!-- End User Page Nav -->
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" th:href="@{/admin/comment}">
+                <i class="bi bi-envelope"></i>
+                <span>Comment</span>
+            </a>
+        </li><!-- End Comment Page Nav -->
+
+    </ul>
+
+</aside><!-- End Sidebar-->
+
+<!--Footer-->
+<footer th:fragment="footer" id="footer" class="footer">
+    <div class="copyright">
+        &copy; Copyright <strong><span>Nguyen Anh Tuan</span></strong>. All Rights Reserved
+    </div>
+</footer>
+
+<!--Script-->
+<div th:fragment="script">
+    <script th:src="@{/adminResource/vendor/apexcharts/apexcharts.min.js}"></script>
+    <script th:src="@{/adminResource/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/adminResource/vendor/chart.js/chart.min.js}"></script>
+    <script th:src="@{/adminResource/vendor/echarts/echarts.min.js}"></script>
+    <script th:src="@{/adminResource/vendor/quill/quill.min.js}"></script>
+    <script th:src="@{/adminResource/vendor/simple-datatables/simple-datatables.js}"></script>
+    <script th:src="@{/adminResource/vendor/tinymce/tinymce.min.js}"></script>
+    <script th:src="@{/adminResource/vendor/php-email-form/validate.js}"></script>
+
+    <!-- Template Main JS File -->
+    <script th:src="@{/adminResource/js/main.js}"></script>
+</div>
+
+</body>
+</html>

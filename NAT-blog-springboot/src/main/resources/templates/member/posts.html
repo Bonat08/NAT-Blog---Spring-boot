@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th = "https://www.thymeleaf.org/">
+<head th:replace="~{/member/fragments::head}">
+</head>
+<body>
+  <!--================Header Menu Area =================-->
+  <header th:replace="~{/member/fragments::header}">
+  </header>
+  <!--================Header Menu Area =================-->
+
+  <!--================ Start Blog Post Area =================-->
+  <section class="section blog-post-area section-margin mt-4">
+      <div class="row">
+
+          <div class="col-lg">
+
+              <div class="card">
+                  <div class="card-body">
+                      <h5 class="card-title">Your Posts</h5>
+                      <div th:if = "${size == 0}">
+                          <p>No posts in system</p>
+                      </div>
+                      <div th:if = "${success}" class="text-center alert alert-success">
+                          <p th:text = "${success}"></p>
+                      </div>
+                      <div th:if = "${errors}" class="text-center alert alert-danger">
+                          <p th:text = "${errors}"></p>
+                      </div>
+                      <!-- Table with stripped rows -->
+                      <table class="table table-striped" th:if = "${size > 0}">
+                          <thead>
+                          <tr>
+                              <th scope="col">Title</th>
+                              <th scope="col">Category</th>
+                              <th scope="col">Description</th>
+                              <th scope="col">Created Date</th>
+                              <th scope="col">Update</th>
+                              <th scope="col">Enable/Disable</th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                          <tr th:each="post:${posts}">
+                              <td th:text="${post.title}">/td>
+                              <td th:text="${post.category}"></td>
+                              <td th:text="${post.shortdescription}"></td>
+                              <td th:text="${#dates.format(post.createddate, 'dd-MMM-yyyy')}"></td>
+                              <td>
+                                  <a th:href="@{/member/update-post/{id} (id=${post.id})}" class="btn btn-warning">Update</a>
+                              </td>
+                              <td>
+                                  <a th:if="${post.is_enabled == true}" th:href="@{/member/disable-post/{id} (id=${post.id}) }" class="btn btn-danger">Disable</a>
+                                  <a th:if="${post.is_enabled == false}" th:href="@{/member/enable-post/{id} (id=${post.id}) }" class="btn btn-primary">Enable</a>
+                              </td>
+                          </tr>
+                          </tbody>
+                      </table>
+                      <!-- End Table with stripped rows -->
+
+                      <!-- Pagination -->
+                      <nav aria-label="Page navigation example">
+                          <ul class="pagination">
+                              <li th:if = "${currentPage != 0}" class="page-item">
+                                  <a th:href="@{'/member/posts/' + ${currentPage - 1}}" class="page-link" href="#">Previous</a>
+                              </li>
+                              <li th:each = "i : ${#numbers.sequence(1, totalPages)}" th:classappend="${currentPage == i - 1 ? 'active' : ''}" class="page-item">
+                                  <a th:href="@{'/member/posts/' + ${i - 1}}" class="page-link" href="#"><span th:text = "${i}"></span></a>
+                              </li>
+                              <li th:if = "${currentPage + 1 != totalPages}" class="page-item">
+                                  <a th:href="@{'/member/posts/' + ${currentPage + 1}}" class="page-link" href="#">Next</a>
+                              </li>
+                          </ul>
+                      </nav>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+  <!--================ End Blog Post Area =================-->
+
+  <!--================ Start Footer Area =================-->
+  <footer th:replace="~{/member/fragments::footer}">
+  </footer>
+  <!--================ End Footer Area =================-->
+
+  <div th:replace="~{/member/fragments::script}"></div>
+</body>
+</html>

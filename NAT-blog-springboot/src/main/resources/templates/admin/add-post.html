@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th = "https://www.thymeleaf.org/">
+
+<head th:replace="~{/admin/fragments::head}">
+</head>
+
+<body>
+
+<!-- ======= Header ======= -->
+<header th:replace="~{/admin/fragments::header}">
+</header><!-- End Header -->
+
+<!-- ======= Sidebar ======= -->
+<aside th:replace="~{/admin/fragments::sidebar}">
+</aside><!-- End Sidebar-->
+
+<main id="main" class="main">
+    <section class="section">
+        <div class="row">
+            <div class="col-lg">
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Add new post</h5>
+                        <div th:if = "${errors}">
+                            <p class = "alert alert-danger" th:text = "${errors}"></p>
+                        </div>
+                        <div th:if = "${success}">
+                            <p class = "alert alert-success" th:text = "${success}"></p>
+                        </div>
+                        <!-- General Form Elements -->
+                        <form th:action="@{/add-new-post}" method="POST" th:object="${postDto}" enctype="multipart/form-data">
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">Category</label>
+                                <div class="col-sm-10">
+                                    <select required th:field="*{category}" class="form-select" aria-label="Default select example">
+                                        <option th:value="null"> --- Select Category ---</option>
+                                        <option th:each = "category : ${categories}"
+                                                th:value = "${category}"
+                                                th:text = "${category}">
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="title" class="col-sm-2 col-form-label">Title</label>
+                                <div class="col-sm-10">
+                                    <input required th:field="*{title}" type="text" class="form-control" id="title">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="imagePost" class="col-sm-2 col-form-label">Image Upload</label>
+                                <div class="col-sm-10">
+                                    <input required class="form-control input-file" type="file" id="imagePost" name="imagePost">
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label for="shortdescription" class="col-sm-2 col-form-label">Short description</label>
+                                <div class="col-sm-10">
+                                    <textarea required th:field="*{shortdescription}" id="shortdescription" class="form-control" style="height: 100px"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label for="content" class="col-sm-2 col-form-label">Content</label>
+                                <div class="col-sm-10">
+                                    <textarea required th:field="*{content}" id="content" name="content" class="form-control" style="height: 100px"></textarea>
+                                </div>
+                            </div>
+
+
+                            <div class="row mb-3">
+                                <div class="col-sm-10">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </div>
+
+                        </form><!-- End General Form Elements -->
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+</main><!-- End #main -->
+
+<!-- ======= Footer ======= -->
+<footer th:replace="~{/admin/fragments::footer}">
+</footer><!-- End Footer -->
+
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+<!-- Vendor JS Files -->
+<script>
+    $( document ).ready(function() {
+        $("#content").richText();
+    });
+</script>
+<div th:replace="~{/admin/fragments::script}"></div>
+
+</body>
+
+</html>

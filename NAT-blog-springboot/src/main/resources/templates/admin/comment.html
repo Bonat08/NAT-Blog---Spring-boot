@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th = "https://www.thymeleaf.org/">
+
+<head th:replace="~{/admin/fragments::head}">
+</head>
+
+<body>
+
+<!-- ======= Header ======= -->
+<header th:replace="~{/admin/fragments::header}">
+</header><!-- End Header -->
+
+<!-- ======= Sidebar ======= -->
+<aside th:replace="~{/admin/fragments::sidebar}">
+</aside><!-- End Sidebar-->
+
+<main id="main" class="main">
+
+<!--    <div class="pagetitle">-->
+<!--        <h1>General Tables</h1>-->
+<!--        <nav>-->
+<!--            <ol class="breadcrumb">-->
+<!--                <li class="breadcrumb-item"><a href="index.html">Home</a></li>-->
+<!--                <li class="breadcrumb-item">Tables</li>-->
+<!--                <li class="breadcrumb-item active">General</li>-->
+<!--            </ol>-->
+<!--        </nav>-->
+<!--    </div>&lt;!&ndash; End Page Title &ndash;&gt;-->
+
+    <section class="section">
+        <div class="row">
+
+            <div class="col-lg">
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Comments</h5>
+
+                        <!-- Table with stripped rows -->
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th scope="col">Id</th>
+                                <th scope="col">Created by</th>
+                                <th scope="col">Post</th>
+                                <th scope="col">Content</th>
+                                <th scope="col">Manipulation</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>ADMIN</td>
+                                <td>HaHa</td>
+                                <td>Hahahaha</td>
+                                <td>
+                                    <a class="btn btn-warning">Update</a>
+                                    <a class="btn btn-danger">Delete</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <!-- End Table with stripped rows -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main><!-- End #main -->
+
+
+<!-- ======= Footer ======= -->
+<footer th:replace="~{/admin/fragments::footer}">
+</footer><!-- End Footer -->
+
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+<!-- Vendor JS Files -->
+<div th:replace="~{/admin/fragments::script}"></div>
+</body>
+
+</html>

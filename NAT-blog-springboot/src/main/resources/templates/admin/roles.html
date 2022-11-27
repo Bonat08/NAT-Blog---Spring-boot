@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th = "https://www.thymeleaf.org/">
+
+<head th:replace="~{/admin/fragments::head}">
+</head>
+
+<body>
+
+<!-- ======= Header ======= -->
+<header th:replace="~{/admin/fragments::header}">
+</header><!-- End Header -->
+
+<!-- ======= Sidebar ======= -->
+<aside th:replace="~{/admin/fragments::sidebar}">
+</aside><!-- End Sidebar-->
+
+<main id="main" class="main">
+
+<!--    <div class="pagetitle">-->
+<!--        <h1>General Tables</h1>-->
+<!--        <nav>-->
+<!--            <ol class="breadcrumb">-->
+<!--                <li class="breadcrumb-item"><a href="index.html">Home</a></li>-->
+<!--                <li class="breadcrumb-item">Tables</li>-->
+<!--                <li class="breadcrumb-item active">General</li>-->
+<!--            </ol>-->
+<!--        </nav>-->
+<!--    </div>&lt;!&ndash; End Page Title &ndash;&gt;-->
+
+    <section class="section">
+        <div class="row">
+
+            <div class="col-lg">
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Roles</h5>
+                        <div th:if = "${size == 0}">
+                            <p>No roles in system</p>
+                        </div>
+                        <div th:if = "${success}" class="text-center alert alert-success">
+                            <p th:text = "${success}"></p>
+                        </div>
+                        <div th:if = "${errors}" class="text-center alert alert-danger">
+                            <p th:text = "${errors}"></p>
+                        </div>
+                        <!-- Table with stripped rows -->
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th scope="col">Id</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Update</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="role:${roles}">
+                                <th scope="row" th:text="${role.id}"></th>
+                                <td th:text="${role.name}"></td>
+                                <td th:text="${role.description}"></td>
+                                <td>
+                                    <a th:href="@{/admin/update-role/{id} (id=${role.id})}" class="btn btn-warning">Update</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <!-- End Table with stripped rows -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main><!-- End #main -->
+
+
+<!-- ======= Footer ======= -->
+<footer th:replace="~{/admin/fragments::footer}">
+</footer><!-- End Footer -->
+
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+<!-- Vendor JS Files -->
+<div th:replace="~{/admin/fragments::script}"></div>
+</body>
+
+</html>
