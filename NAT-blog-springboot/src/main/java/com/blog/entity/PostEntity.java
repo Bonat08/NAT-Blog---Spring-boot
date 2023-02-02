@@ -58,4 +58,9 @@ public class PostEntity {
         this.is_enabled = true;
     }
 
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "users_like_posts", joinColumns = @JoinColumn(name = "post_id", referencedColumnName = "post_id"),
+    inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"))
+    private List<UserEntity> userLikePost;
+
 }

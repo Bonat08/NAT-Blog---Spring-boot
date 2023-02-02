@@ -26,6 +26,9 @@ public class UserEntity {
     private String email;
     private boolean is_enabled;
 
+    @Column(name = "verification_code", length = 64)
+    private String verificationCode;
+
     @Lob
     @Column(columnDefinition = "MEDIUMBLOB")
     private String avatar;
@@ -43,6 +46,9 @@ public class UserEntity {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<CommentEntity> commentEntityList;
+
+    @ManyToMany(mappedBy = "userLikePost")
+    private List<PostEntity> postLiked;
 
     public UserEntity(){
         this.is_enabled = true;

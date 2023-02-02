@@ -21,10 +21,18 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
     @Query(value = "select * from posts p where p.is_enabled=true order by RAND() limit 1", nativeQuery = true)
     PostEntity selectRandom();
 
+    @Query(value = "select count(*) from users_like_posts u where u.user_id = ?1", nativeQuery = true)
+    int countLikes(Long id);
+
     @Query("select count(p) from PostEntity p")
     int countPost();
+
+    @Query("select p from PostEntity p join p.category c where c.name like %?1% or p.title like %?1% and p.is_enabled=true order by p.id desc ")
+    List<PostEntity> searchPostList(String keyword);
 
     List<PostEntity> findAllByUser(UserEntity user);
 
     List<PostEntity> findAllByCategory(CategoryEntity category);
+
+
 }

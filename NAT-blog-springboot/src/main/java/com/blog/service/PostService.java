@@ -15,6 +15,8 @@ public interface PostService {
 
     Page<PostDto> pagePostEnabled(int pageNo);
 
+    Page<PostDto> searchPostList(int pageNo, String keyword);
+
     Page<PostDto> pagePostCategoryAndEnabled(int pageNo, String category);
 
     List<PostDto> selectTop5ByDate();
@@ -30,4 +32,12 @@ public interface PostService {
     int countPost();
 
     PostDto selectRandom();
+
+    void likePost(Long id, String username);
+
+    void unLikePost(Long id, String username);
+
+    int countLikePost(Long id);
+
+    String checkIfUserLikedPost(Long id, String username);
 }

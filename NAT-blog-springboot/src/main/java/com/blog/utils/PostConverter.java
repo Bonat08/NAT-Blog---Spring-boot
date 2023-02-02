@@ -3,6 +3,7 @@ package com.blog.utils;
 import com.blog.dto.PostDto;
 import com.blog.entity.PostEntity;
 import com.blog.repository.CategoryRepository;
+import com.blog.repository.CommentRepository;
 import com.blog.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -12,6 +13,9 @@ public class PostConverter {
 
     @Autowired
     private CategoryRepository categoryRepository;
+
+    @Autowired
+    private CommentRepository commentRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -31,6 +35,7 @@ public class PostConverter {
             postDto.setUser(postEntity.getUser().getUsername());
             postDto.setImage(postEntity.getImage());
             postDto.set_enabled(postEntity.is_enabled());
+            postDto.setNumOfComments(commentRepository.countAllByPost(postEntity));
         }
         return postDto;
     }

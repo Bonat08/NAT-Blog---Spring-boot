@@ -17,4 +17,5 @@ public class PostDto {
     private String user;
     private String content;
     private boolean is_enabled;
+    private Long numOfComments;
 }

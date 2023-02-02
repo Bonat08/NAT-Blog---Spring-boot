@@ -9,29 +9,11 @@
   <!--================Header Menu Area =================-->
 
   <main class="site-main">
-    <!--================Hero Banner start =================-->
-    <section th:replace="~{/member/fragments::hero_banner}">
-    </section>
-    <!--================Hero Banner end =================-->
+<!--    &lt;!&ndash;================Hero Banner start =================&ndash;&gt;-->
+<!--    <section th:replace="~{/member/fragments::hero_banner}">-->
+<!--    </section>-->
+<!--    &lt;!&ndash;================Hero Banner end =================&ndash;&gt;-->
 
-    <!--================ Blog slider start =================-->
-    <section>
-      <div class="container">
-        <div class="owl-carousel owl-theme blog-slider">
-          <div th:each="post:${postsTop5}" class="card blog__slide text-center">
-            <div class="blog__slide__img">
-              <img class="card-img rounded-0" th:src = "${'data:image/jpeg;base64,' + {post.image}}">
-            </div>
-            <div class="blog__slide__content">
-              <a class="blog__slide__label" href="#" th:text="${post.category}"></a>
-              <h3><a th:href="@{/member/blog-details/{id} (id=${post.id})}" th:text="${post.title}"></a></h3>
-              <p th:text="${#dates.format(post.createddate, 'dd-MMM-yyyy')}"></p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!--================ Blog slider end =================-->
 
     <!--================ Start Blog Post Area =================-->
   </main>
@@ -47,8 +29,8 @@
               <div class="thumb">
                 <img class="img-fluid" th:src = "${'data:image/jpeg;base64,' + {post.image}}" alt="">
                 <ul class="thumb-info">
-                  <li><i class="ti-user"></i><a th:text="${post.user}"></a></li>
-                  <li><i class="ti-notepad"></i><a th:text="${#dates.format(post.createddate, 'dd-MMM-yyyy')}"></a></li>
+                  <li><i class="ti-user"></i><a href="#" th:text="${post.user}"></a></li>
+                  <li><i class="ti-notepad"></i><a href="#" th:text="${#dates.format(post.createddate, 'dd-MMM-yyyy')}"></a></li>
                   <li><i class="ti-themify-favicon"></i><a th:text="${post.numOfComments} + ' Comments'"></a></li>
                 </ul>
               </div>
@@ -68,13 +50,13 @@
                 <nav aria-label="Page navigation example" class="blog-pagination justify-content-center d-flex">
                   <ul class="pagination">
                     <li th:if = "${currentPage != 0}" class="page-item">
-                      <a th:href="@{'/member/index/' + ${currentPage - 1}}" class="page-link" href="#">Previous</a>
+                      <a th:href="@{'/member/search-post/' + ${currentPage - 1}(keyword=${keyword})}" class="page-link" >Previous</a>
                     </li>
                     <li th:each = "i : ${#numbers.sequence(1, totalPages)}" th:classappend="${currentPage == i - 1 ? 'active' : ''}" class="page-item">
-                      <a th:href="@{'/member/index/' + ${i - 1}}" class="page-link" href="#"><span th:text = "${i}"></span></a>
+                      <a th:href="@{'/member/search-post/' + ${i - 1}(keyword=${keyword})}" class="page-link" ><span th:text = "${i}"></span></a>
                     </li>
                     <li th:if = "${currentPage + 1 != totalPages}" class="page-item">
-                      <a th:href="@{'/member/index/' + ${currentPage + 1}}" class="page-link" href="#">Next</a>
+                      <a th:href="@{'/member/search-post/' + ${currentPage + 1}(keyword=${keyword})}" class="page-link" >Next</a>
                     </li>
                   </ul>
                 </nav>

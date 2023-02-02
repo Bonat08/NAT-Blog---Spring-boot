@@ -111,6 +111,18 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public Page<PostDto> searchPostList(int pageNo, String keyword) {
+        Pageable pageable = PageRequest.of(pageNo, 5);
+        List<PostEntity> postEntities = postRepository.searchPostList(keyword);
+        List<PostDto> postDtos = new ArrayList<>();
+        for(PostEntity postEntity:postEntities){
+            postDtos.add(postConverter.toDto(postEntity));
+        }
+        Page<PostDto> pagePosts = toPage(postDtos,pageable);
+        return pagePosts;
+    }
+
+    @Override
     public Page<PostDto> pagePostCategoryAndEnabled(int pageNo, String category) {
         Pageable pageable = PageRequest.of(pageNo, 5);
         CategoryEntity categoryEntity = categoryRepository.findOneByName(category);
@@ -185,5 +197,42 @@ public class PostServiceImpl implements PostService {
     @Override
     public PostDto selectRandom() {
         return postConverter.toDto(postRepository.selectRandom());
+    }
+
+    @Override
+    public void likePost(Long id, String username) {
+        PostEntity postEntity = postRepository.findById(id).get();
+        UserEntity userEntity = userRepository.findByUsername(username);
+        postEntity.getUserLikePost().add(userEntity);
+        userEntity.getPostLiked().add(postEntity);
+        postRepository.save(postEntity);
+    }
+
+    @Override
+    public void unLikePost(Long id, String username) {
+        PostEntity postEntity = postRepository.findById(id).get();
+        UserEntity userEntity = userRepository.findByUsername(username);
+        postEntity.getUserLikePost().remove(userEntity);
+        userEntity.getPostLiked().remove(postEntity);
+        postRepository.save(postEntity);
+    }
+
+    @Override
+    public int countLikePost(Long id) {
+        PostEntity postEntity = postRepository.findById(id).get();
+        return postEntity.getUserLikePost().size();
+    }
+
+    @Override
+    public String checkIfUserLikedPost(Long id, String username) {
+        PostEntity postEntity = postRepository.findById(id).get();
+        UserEntity userEntity = userRepository.findByUsername(username);
+        List<UserEntity> usersLikedPost = postEntity.getUserLikePost();
+        for(UserEntity user:usersLikedPost){
+            if(user.getId() == userEntity.getId()){
+                return "TRUE";
+            }
+        }
+        return "FALSE";
     }
 }

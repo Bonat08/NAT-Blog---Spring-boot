@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th = "https://www.thymeleaf.org/">
+
+<head th:replace="~{/auth/fragments::head}">
+</head>
+
+<body>
+
+  <main>
+    <div class="container">
+
+      <section class="section error-404 min-vh-100 d-flex flex-column align-items-center justify-content-center">
+        <h1 th:text="${errorCode}"></h1>
+        <h2 th:text="${errorMessage}"></h2>
+        <a class="btn" th:href="@{/member/index}">Back to home</a>
+        <img th:src="@{/adminResource/img/not-found.svg}" class="img-fluid py-5" alt="Page Not Found">
+        <div class="credits">
+          Designed by Nguyen Anh Tuan
+        </div>
+      </section>
+
+    </div>
+  </main><!-- End #main -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <div th:replace="~{/auth/fragments::script}"></div>
+
+</body>
+
+</html>
